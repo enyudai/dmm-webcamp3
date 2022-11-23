@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :ensure_user, only: [:edit, :update, :destroy]
+  #before_action :ensure_user, only: [:edit, :update, :destroy]
   
   def index
     @book = Book.new
@@ -20,14 +20,19 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    @book.update
-    redirect_to book_path(book.id)
+    @book.update(book_params)
+    redirect_to book_path#バグ箇所
+  end
+  
+  def destroy
+    book = Book.find(params[:id]) 
+    book.destroy  
+    redirect_to books_path
   end
   
   def show
     @book = Book.find(params[:id])
-    @user = @book.user
-    
+    @user = @book.user  
   end
   
   private
