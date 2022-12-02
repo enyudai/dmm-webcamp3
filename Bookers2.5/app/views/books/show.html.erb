@@ -35,17 +35,22 @@
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
           
-           <td></td>
-           <td><% @comment.each do |comment| %>
-                <%= image_tag comment.user.get_profile_image(100,100) %>
-                <%= comment.user.name %>
-                <%= comment.comment %>
-                <% if comment.user == current_user %>
-                 <%= link_to "destroy", book_comment_path(@book, comment), method: :delete %>
-                <% end %>
-              <% end %>
-           </td>    
-          
+          <td>
+           <th>コメント件数：<%= @book.book_comments.count %></th>    
+           <% @book.book_comments.each do |book_comment| %>
+            <th><%= image_tag book_comment.user.get_profile_image(100,100) %></th>
+            <%= book_comment.user.name %>
+            <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
+           <% end %>
+          </td>
+          <td>
+            <%= form_with model: [@book, @comment] do |f| %>
+             <%= f.text_area :comment, rows: '5' %>
+             <%= f.submit "送信" %>
+            <% end %>
+          </td>
+           
+           
         </tr>
       </table>
     </div>
