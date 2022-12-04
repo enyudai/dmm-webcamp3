@@ -1,4 +1,5 @@
 class HomesController < ApplicationController
+  layout "search", except: [:top]
   def top
   end
   
