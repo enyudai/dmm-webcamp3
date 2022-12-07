@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   
   get "search" => "searches#search"
   
-  
+  get "groups/form" => "groups#group_form", as: 'group_form'
+  resources :groups, except: [:destroy]
   
   resources :users do
     resource :relationships, only: [:create, :destroy]
-    resources :groups, except: [:destroy]
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
   end
